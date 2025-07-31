@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$TOQ - Trust Or Quit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #1a1a1a;
+            padding: 12px 0;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: #00ff88;
+            letter-spacing: -0.02em;
+        }
+
+        .logo img {
+            height: 32px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 13px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .twitter-link {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Main Content */
+        .main {
+            padding-top: 60px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 40px 0 20px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            color: #fff;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-subtitle {
+            font-size: 16px;
+            color: #666;
+            font-weight: 400;
+            margin-bottom: 32px;
+        }
+
+        /* Game Status Section */
+        .game-status {
+            background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-status::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+        }
+
+        .status-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 8px;
+        }
+
+        .dev-timer {
+            font-size: 24px;
+            font-weight: 800;
+            color: #ff9500;
+            font-family: 'Monaco', monospace;
+            margin-bottom: 8px;
+        }
+
+        .dev-timer-label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .prize-section {
+            background: linear-gradient(135deg, #111 0%, #1a1a1a 100%);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prize-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+        }
+
+        .prize-amount {
+            font-size: 32px;
+            font-weight: 800;
+            color: #00ff88;
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .prize-label {
+            color: #888;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Rules Section */
+        .rules-section {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .rules-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .rules-concept {
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+            padding: 16px;
+            background: #0a0a0a;
+            border-radius: 6px;
+            border-left: 3px solid #00ff88;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: #333;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .rule-item {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .rule-outcome {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .rule-split { color: #00ff88; }
+        .rule-mixed { color: #ff6b35; }
+        .rule-steal { color: #ff3b30; }
+
+        .rule-desc {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.3;
+        }
+
+        .rule-detail {
+            font-size: 11px;
+            color: #666;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Two Column Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        /* Registration */
+        .registration {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+
+        .form-input::placeholder {
+            color: #555;
+        }
+
+        .btn {
+            background: #00ff88;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            color: #000;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .btn:hover {
+            background: #00e677;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        /* Participants */
+        .participants {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .participants-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .participant-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #222;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .participant-item:last-child {
+            border-bottom: none;
+        }
+
+        .participant-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .participant-item.selected {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 2px solid #00ff88;
+            padding-left: 6px;
+        }
+
+        .participant-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .participant-wallet {
+            color: #666;
+            font-size: 11px;
+            font-family: 'Monaco', monospace;
+        }
+
+        .participant-count {
+            color: #666;
+            font-size: 11px;
+            margin-bottom: 12px;
+        }
+
+        /* Game Arena */
+        .game-arena {
+            display: none;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #333;
+        }
+
+        .game-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .timer {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff3b30;
+            font-family: 'Monaco', monospace;
+        }
+
+        .players-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .player-card {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .player-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .player-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 12px;
+            font-size: 11px;
+            color: #888;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #666;
+        }
+
+        .status-dot.waiting { background: #ff9500; }
+        .status-dot.ready { background: #00ff88; }
+
+        .choice-buttons {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .choice-btn {
+            padding: 10px;
+            border: 1px solid;
+            border-radius: 4px;
+            background: transparent;
+            color: #fff;
+            font-weight: 600;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .split-btn {
+            border-color: #00ff88;
+        }
+
+        .split-btn:hover {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .steal-btn {
+            border-color: #ff3b30;
+        }
+
+        .steal-btn:hover {
+            background: #ff3b30;
+        }
+
+        /* Chat */
+        .chat-section {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 12px 16px;
+            background: #111;
+            border-bottom: 1px solid #333;
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+        }
+
+        .chat-messages {
+            height: 120px;
+            overflow-y: auto;
+            padding: 12px;
+        }
+
+        .chat-message {
+            margin-bottom: 8px;
+            font-size: 12px;
+            line-height: 1.3;
+        }
+
+        .chat-input-group {
+            display: flex;
+            border-top: 1px solid #333;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 12px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+        }
+
+        .send-btn {
+            background: #333;
+            border: none;
+            padding: 10px 16px;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .send-btn:hover {
+            background: #444;
+        }
+
+        /* Results */
+        .results {
+            display: none;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 32px 24px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .result-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .result-details {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* Spectators */
+        .spectators {
+            text-align: center;
+            padding: 16px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            margin-bottom: 24px;
+        }
+
+        .spectator-count {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .spectator-number {
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        /* Dev Controls */
+        .dev-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 12px;
+        }
+
+        .dev-btn {
+            background: #333;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 11px;
+            cursor: pointer;
+            margin-right: 8px;
+            margin-bottom: 4px;
+        }
+
+        .dev-btn:hover {
+            background: #444;
+        }
+
+        .selected-players {
+            background: #0a0a0a;
+            border: 1px solid #00ff88;
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0;
+            font-size: 11px;
+        }
+
+        .selected-player {
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .players-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 2px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <img src="logo.png" alt="$TOQ Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='$TOQ';">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#rules">Rules</a></li>
+                    <li><a href="#register">Register</a></li>
+                    <li><a href="https://x.com/trustorquit" target="_blank" class="twitter-link">🐦 Twitter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+<div class="hero">
+    <div class="container">
+        <img src="Split or Steal.png" alt="Split Or Steal Logo" class="hero-logo">
+        <p class="hero-subtitle">Game Theory Memecoin Protocol</p>
+                
+                <div class="game-status" id="gameStatus">
+                    <div class="status-text" id="statusText">Waiting for Registrations</div>
+                    <div class="dev-timer" id="devTimer" style="display: none;">2:30</div>
+                    <div class="dev-timer-label" id="devTimerLabel" style="display: none;">Dev selecting players...</div>
+                </div>
+
+                <div class="prize-section">
+                    <div class="prize-amount" id="prizeAmount">1,000,000</div>
+                    <div class="prize-label">$TOQ Tokens Prize Pool</div>
+                </div>
+
+                <div class="rules-section" id="rules">
+                    <h2 class="rules-title">How Trust Or Quit Works</h2>
+                    <div class="rules-concept">
+                        <strong>Concept:</strong> A memecoin based on the classic game theory experiment. Two random token holders are selected to play with real stakes. Each player chooses to either Trust Or Quit without knowing the other's choice. Your decision affects both players' token holdings based on the outcomes below.
+                    </div>
+                    <div class="rules-grid">
+                        <div class="rule-item">
+                            <div class="rule-outcome rule-split">BOTH SPLIT</div>
+                            <div class="rule-desc">Each player gains +20%</div>
+                            <div class="rule-detail">Cooperation rewards both</div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-outcome rule-mixed">ONE STEALS</div>
+                            <div class="rule-desc">Stealer +50%, Victim -50%</div>
+                            <div class="rule-detail">Betrayal has consequences</div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-outcome rule-steal">BOTH STEAL</div>
+                            <div class="rule-desc">Both players lose -30%</div>
+                            <div class="rule-detail">Mutual destruction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="spectators" id="spectators">
+                <div class="spectator-count">
+                    <span class="spectator-number" id="spectatorCount">5</span> watching live
+                </div>
+            </div>
+
+            <div class="game-arena" id="arena">
+                <div class="game-header">
+                    <div class="game-title">Live Game</div>
+                    <div class="timer" id="timerDisplay">5:00</div>
+                </div>
+
+                <div class="players-grid">
+                    <div class="player-card">
+                        <div class="player-name" id="player1Name">Player 1</div>
+                        <div class="player-status">
+                            <div class="status-dot waiting" id="player1Status"></div>
+                            <span id="player1StatusText">Waiting</span>
+                        </div>
+                        <div class="choice-buttons" id="player1Choices">
+                            <button class="choice-btn split-btn" onclick="makeChoice(1, 'split')">Split</button>
+                            <button class="choice-btn steal-btn" onclick="makeChoice(1, 'steal')">Steal</button>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="player-name" id="player2Name">Player 2</div>
+                        <div class="player-status">
+                            <div class="status-dot waiting" id="player2Status"></div>
+                            <span id="player2StatusText">Waiting</span>
+                        </div>
+                        <div class="choice-buttons" id="player2Choices">
+                            <button class="choice-btn split-btn" onclick="makeChoice(2, 'split')">Split</button>
+                            <button class="choice-btn steal-btn" onclick="makeChoice(2, 'steal')">Steal</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-section">
+                    <div class="chat-header">Player Communication</div>
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input-group">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Send message...">
+                        <button class="send-btn" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results" id="results">
+                <div class="result-title" id="resultTitle">Game Complete</div>
+                <div class="result-details" id="resultDetails"></div>
+                <button class="btn" onclick="resetGame()">New Game</button>
+            </div>
+
+            <div class="main-grid">
+                <div class="registration" id="register">
+                    <h2 class="section-title">Register to Play</h2>
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label class="form-label" for="playerName">Display Name</label>
+                            <input type="text" id="playerName" class="form-input" placeholder="Enter name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="walletAddress">Solana Wallet</label>
+                            <input type="text" id="walletAddress" class="form-input" placeholder="Wallet address" required>
+                        </div>
+                        <button type="submit" class="btn" id="registerBtn">Register</button>
+                    </form>
+                </div>
+
+                <div class="participants">
+                    <h3 class="section-title">Registered Players</h3>
+                    <div class="participant-count" id="participantCount">0 players registered</div>
+                    <div class="participants-list" id="participantsList">
+                        <!-- Participants will be added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="dev-controls">
+        <div class="selected-players" id="selectedPlayers" style="display: none;">
+            Selected: <span id="selectedList">None</span>
+        </div>
+        <button class="dev-btn" onclick="startDevSelection()" id="devSelectBtn">Start Selection (150s)</button>
+        <button class="dev-btn" onclick="startGame()" id="startGameBtn" style="display: none;">Start Game</button>
+        <button class="dev-btn" onclick="resetGame()">Reset</button>
+    </div>
+
+    <script>
+        let gameState = {
+            participants: [],
+            selectedPlayers: [],
+            currentPlayers: null,
+            gameActive: false,
+            devSelecting: false,
+            timer: 300,
+            devTimer: 150,
+            timerInterval: null,
+            devTimerInterval: null,
+            player1Choice: null,
+            player2Choice: null,
+            spectatorCount: 5,
+            phase: 'registration' // registration, dev-selection, game-active, results
+        };
+
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('playerName').value;
+            const wallet = document.getElementById('walletAddress').value;
+            
+            if (name && wallet && !gameState.devSelecting && !gameState.gameActive) {
+                registerPlayer(name, wallet);
+            }
+        });
+
+        function registerPlayer(name, wallet) {
+            // Check if already registered
+            if (gameState.participants.some(p => p.wallet === wallet)) {
+                alert('Wallet already registered!');
+                return;
+            }
+
+            const participant = {
+                id: Date.now(),
+                name: name,
+                wallet: wallet,
+                timestamp: new Date()
+            };
+            
+            gameState.participants.push(participant);
+            updateParticipantsList();
+            updateGameStatus();
+            
+            document.getElementById('playerName').value = '';
+            document.getElementById('walletAddress').value = '';
+        }
+
+        function updateParticipantsList() {
+            const container = document.getElementById('participantsList');
+            const count = document.getElementById('participantCount');
+            
+            count.textContent = `${gameState.participants.length} players registered`;
+            container.innerHTML = '';
+            
+            gameState.participants.forEach(participant => {
+                const item = document.createElement('div');
+                item.className = 'participant-item';
+                if (gameState.selectedPlayers.includes(participant.id)) {
+                    item.classList.add('selected');
+                }
+                
+                item.innerHTML = `
+                    <div class="participant-name">${participant.name}</div>
+                    <div class="participant-wallet">${participant.wallet.substring(0, 6)}...${participant.wallet.substring(participant.wallet.length - 4)}</div>
+                `;
+                
+                if (gameState.devSelecting) {
+                    item.onclick = () => selectPlayer(participant.id);
+                }
+                
+                container.appendChild(item);
+            });
+        }
+
+        function selectPlayer(playerId) {
+            if (!gameState.devSelecting) return;
+            
+            const index = gameState.selectedPlayers.indexOf(playerId);
+            if (index > -1) {
+                gameState.selectedPlayers.splice(index, 1);
+            } else if (gameState.selectedPlayers.length < 2) {
+                gameState.selectedPlayers.push(playerId);
+            }
+            
+            updateParticipantsList();
+            updateSelectedPlayersDisplay();
+            
+            if (gameState.selectedPlayers.length === 2) {
+                document.getElementById('startGameBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('startGameBtn').style.display = 'none';
+            }
+        }
+
+        function updateSelectedPlayersDisplay() {
+            const container = document.getElementById('selectedPlayers');
+            const list = document.getElementById('selectedList');
+            
+            if (gameState.selectedPlayers.length === 0) {
+                container.style.display = 'none';
+            } else {
+                container.style.display = 'block';
+                const selectedNames = gameState.selectedPlayers.map(id => {
+                    const player = gameState.participants.find(p => p.id === id);
+                    return player ? player.name : 'Unknown';
+                });
+                list.textContent = selectedNames.join(' vs ');
+            }
+        }
+
+        function startDevSelection() {
+            if (gameState.participants.length < 2) {
+                alert('Need at least 2 registered players!');
+                return;
+            }
+            
+            gameState.devSelecting = true;
+            gameState.phase = 'dev-selection';
+            gameState.devTimer = 150;
+            
+            document.getElementById('devSelectBtn').style.display = 'none';
+            document.getElementById('registerBtn').disabled = true;
+            
+            updateGameStatus();
+            startDevTimer();
+            updateParticipantsList();
+        }
+
+        function startDevTimer() {
+            gameState.devTimerInterval = setInterval(() => {
+                gameState.devTimer--;
+                updateDevTimerDisplay();
+                
+                if (gameState.devTimer <= 0) {
+                    // Auto-select random players if time runs out
+                    if (gameState.selectedPlayers.length === 0) {
+                        const shuffled = [...gameState.participants].sort(() => 0.5 - Math.random());
+                        gameState.selectedPlayers = [shuffled[0].id, shuffled[1].id];
+                        updateParticipantsList();
+                        updateSelectedPlayersDisplay();
+                    }
+                    clearInterval(gameState.devTimerInterval);
+                    if (gameState.selectedPlayers.length === 2) {
+                        startGame();
+                    }
+                }
+            }, 1000);
+        }
+
+        function updateDevTimerDisplay() {
+            const minutes = Math.floor(gameState.devTimer / 60);
+            const seconds = gameState.devTimer % 60;
+            document.getElementById('devTimer').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateGameStatus() {
+            const statusText = document.getElementById('statusText');
+            const devTimer = document.getElementById('devTimer');
+            const devTimerLabel = document.getElementById('devTimerLabel');
+            
+            switch(gameState.phase) {
+                case 'registration':
+                    statusText.textContent = `${gameState.participants.length} Players Registered`;
+                    devTimer.style.display = 'none';
+                    devTimerLabel.style.display = 'none';
+                    break;
+                    
+                case 'dev-selection':
+                    statusText.textContent = 'Dev is Choosing Players';
+                    devTimer.style.display = 'block';
+                    devTimerLabel.style.display = 'block';
+                    break;
+                    
+                case 'game-active':
+                    statusText.textContent = 'Game in Progress';
+                    devTimer.style.display = 'none';
+                    devTimerLabel.style.display = 'none';
+                    break;
+                    
+                case 'results':
+                    statusText.textContent = 'Game Completed';
+                    devTimer.style.display = 'none';
+                    devTimerLabel.style.display = 'none';
+                    break;
+            }
+        }
+
+        function startGame() {
+            if (gameState.selectedPlayers.length !== 2) {
+                alert('Please select exactly 2 players!');
+                return;
+            }
+            
+            clearInterval(gameState.devTimerInterval);
+            gameState.devSelecting = false;
+            gameState.phase = 'game-active';
+            
+            // Get selected players
+            gameState.currentPlayers = gameState.selectedPlayers.map(id => 
+                gameState.participants.find(p => p.id === id)
+            );
+            
+            document.getElementById('player1Name').textContent = gameState.currentPlayers[0].name;
+            document.getElementById('player2Name').textContent = gameState.currentPlayers[1].name;
+            
+            document.getElementById('arena').style.display = 'block';
+            document.getElementById('player1Choices').style.display = 'grid';
+            document.getElementById('player2Choices').style.display = 'grid';
+            document.getElementById('startGameBtn').style.display = 'none';
+            
+            updateGameStatus();
+            startTimer();
+            gameState.gameActive = true;
+            updateSpectatorCount();
+            
+            // Add game start message to chat
+            addChatMessage('System', 'Game started! You have 5 minutes to make your choice.');
+        }
+
+        function startTimer() {
+            gameState.timer = 300; // 5 minutes
+            gameState.timerInterval = setInterval(() => {
+                gameState.timer--;
+                updateTimerDisplay();
+                
+                if (gameState.timer <= 0) {
+                    endGame('timeout');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(gameState.timer / 60);
+            const seconds = gameState.timer % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function makeChoice(player, choice) {
+            if (!gameState.gameActive) return;
+            
+            if (player === 1) {
+                gameState.player1Choice = choice;
+                document.getElementById('player1Status').className = 'status-dot ready';
+                document.getElementById('player1StatusText').textContent = 'Ready';
+                document.getElementById('player1Choices').style.display = 'none';
+                addChatMessage('System', `${gameState.currentPlayers[0].name} has made their choice.`);
+            } else {
+                gameState.player2Choice = choice;
+                document.getElementById('player2Status').className = 'status-dot ready';
+                document.getElementById('player2StatusText').textContent = 'Ready';
+                document.getElementById('player2Choices').style.display = 'none';
+                addChatMessage('System', `${gameState.currentPlayers[1].name} has made their choice.`);
+            }
+            
+            if (gameState.player1Choice && gameState.player2Choice) {
+                addChatMessage('System', 'Both players ready! Revealing results...');
+                setTimeout(() => endGame('choices'), 2000);
+            }
+        }
+
+        function endGame(reason) {
+            clearInterval(gameState.timerInterval);
+            gameState.gameActive = false;
+            gameState.phase = 'results';
+            
+            if (reason === 'timeout') {
+                // Random choices for timeout
+                gameState.player1Choice = gameState.player1Choice || (Math.random() > 0.5 ? 'split' : 'steal');
+                gameState.player2Choice = gameState.player2Choice || (Math.random() > 0.5 ? 'split' : 'steal');
+                addChatMessage('System', 'Time up! Random choices made for players who didn\'t decide.');
+            }
+            
+            setTimeout(() => {
+                calculateResults();
+                updateGameStatus();
+            }, 1000);
+        }
+
+        function calculateResults() {
+            const p1Choice = gameState.player1Choice;
+            const p2Choice = gameState.player2Choice;
+            const p1Name = gameState.currentPlayers[0].name;
+            const p2Name = gameState.currentPlayers[1].name;
+            
+            let title = '';
+            let details = '';
+            let p1Result = '';
+            let p2Result = '';
+            
+            if (p1Choice === 'split' && p2Choice === 'split') {
+                title = '🤝 Cooperation Wins!';
+                details = 'Both players chose to SPLIT. Trust pays off!';
+                p1Result = `${p1Name}: +20% tokens`;
+                p2Result = `${p2Name}: +20% tokens`;
+            } else if (p1Choice === 'steal' && p2Choice === 'steal') {
+                title = '💥 Mutual Destruction!';
+                details = 'Both players chose to STEAL. Greed destroys all!';
+                p1Result = `${p1Name}: -30% tokens`;
+                p2Result = `${p2Name}: -30% tokens`;
+            } else {
+                const stealer = p1Choice === 'steal' ? p1Name : p2Name;
+                const victim = p1Choice === 'steal' ? p2Name : p1Name;
+                title = `🗡️ ${stealer} Backstabs!`;
+                details = `${stealer} chose STEAL while ${victim} chose SPLIT.`;
+                if (p1Choice === 'steal') {
+                    p1Result = `${p1Name}: +50% tokens`;
+                    p2Result = `${p2Name}: -50% tokens`;
+                } else {
+                    p1Result = `${p1Name}: -50% tokens`;
+                    p2Result = `${p2Name}: +50% tokens`;
+                }
+            }
+            
+            const fullDetails = `${details}\n\n${p1Result}\n${p2Result}`;
+            showResults(title, fullDetails);
+            
+            // Add results to chat
+            addChatMessage('System', `Results: ${p1Name} chose ${p1Choice.toUpperCase()}, ${p2Name} chose ${p2Choice.toUpperCase()}`);
+        }
+
+        function showResults(title, details) {
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultDetails').textContent = details;
+            document.getElementById('results').style.display = 'block';
+            document.getElementById('arena').style.display = 'none';
+        }
+
+        function resetGame() {
+            // Clear all intervals
+            clearInterval(gameState.timerInterval);
+            clearInterval(gameState.devTimerInterval);
+            
+            // Reset game state
+            gameState.selectedPlayers = [];
+            gameState.player1Choice = null;
+            gameState.player2Choice = null;
+            gameState.currentPlayers = null;
+            gameState.gameActive = false;
+            gameState.devSelecting = false;
+            gameState.phase = 'registration';
+            gameState.timer = 300;
+            gameState.devTimer = 150;
+            
+            // Reset UI
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('arena').style.display = 'none';
+            document.getElementById('selectedPlayers').style.display = 'none';
+            document.getElementById('devSelectBtn').style.display = 'inline-block';
+            document.getElementById('startGameBtn').style.display = 'none';
+            document.getElementById('registerBtn').disabled = false;
+            
+            document.getElementById('player1Status').className = 'status-dot waiting';
+            document.getElementById('player2Status').className = 'status-dot waiting';
+            document.getElementById('player1StatusText').textContent = 'Waiting';
+            document.getElementById('player2StatusText').textContent = 'Waiting';
+            document.getElementById('player1Choices').style.display = 'none';
+            document.getElementById('player2Choices').style.display = 'none';
+            
+            document.getElementById('chatMessages').innerHTML = '';
+            
+            updateGameStatus();
+            updateParticipantsList();
+        }
+
+        function addChatMessage(sender, message) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message';
+            
+            if (sender === 'System') {
+                messageDiv.innerHTML = `<strong style="color: #00ff88;">${sender}:</strong> ${message}`;
+            } else {
+                messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            }
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message && gameState.gameActive) {
+                // Simulate player message (in real implementation, this would be restricted to actual players)
+                const playerName = gameState.currentPlayers[Math.floor(Math.random() * 2)].name;
+                addChatMessage(playerName, message);
+                input.value = '';
+            }
+        }
+
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function updateSpectatorCount() {
+            const baseCount = 5;
+            let currentCount = baseCount;
+            
+            setInterval(() => {
+                // Increase spectators during active game
+                if (gameState.gameActive) {
+                    currentCount += Math.floor(Math.random() * 3);
+                } else {
+                    currentCount += Math.floor(Math.random() * 2) - 1;
+                }
+                
+                // Keep within reasonable bounds
+                currentCount = Math.max(currentCount, baseCount);
+                currentCount = Math.min(currentCount, 15);
+                
+                gameState.spectatorCount = currentCount;
+                document.getElementById('spectatorCount').textContent = gameState.spectatorCount;
+            }, 3000);
+        }
+
+        // Initialize demo participants
+        setTimeout(() => {
+            registerPlayer('cryptoking', '7xKWK9WCci54RokXy2J5cP9akmtTu6KkaxT9wYbJMctp');
+            registerPlayer('degenape', '9WzDXwBbmkg8ZTbNMqUxvQRAyrZzDsGYdLVL9zYtAWWM');
+            registerPlayer('solmaxi', '5FHwKrdxnt8vsqKQxkLjy6NWrJReNPBXfKzUCgz3WKHx');
+            registerPlayer('moonboi', '3AxKWf8mP2nVcL9RqJdH7BsE6vYtMpLkQ5GhN2wUoRtX');
+            registerPlayer('diamondhands', '8BqZx4vH9LcP2nR5TkMj6wFgE3sYoUiNm7DtA1vXsKpQ');
+        }, 500);
+
+        // Start spectator count updates
+        updateSpectatorCount();
+        
+        // Initialize game status
+        updateGameStatus();
+    </script>
+</body>
+</html>
